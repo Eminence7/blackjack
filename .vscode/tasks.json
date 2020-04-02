@@ -1,0 +1,16 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Test",
+            "type": "shell",
+            "command": "& C:/Users/Jordan DuCille/AppData/Local/Programs/Python/Python38/python.exe \"c:/Users/Jordan DuCille/Documents/sem2y2/programming2/BlackJack/Deck.py\"",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
