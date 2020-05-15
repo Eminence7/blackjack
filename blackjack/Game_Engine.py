@@ -2,6 +2,8 @@
 from Card import Card
 from Hand import Hand
 from Deck import Deck
+import wx
+from wx.lib.pubsub import pub
 
 class Game_Engine:
     def __init__(self):
@@ -23,10 +25,7 @@ class Game_Engine:
 
             print("Your hand is:")
             self.player_hand.display()
-            print()
-            print("Dealer's hand is:")
-            self.dealer_hand.display()
-
+            
             game_over = False
 
             while not game_over:

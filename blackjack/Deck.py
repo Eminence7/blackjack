@@ -1,5 +1,7 @@
 import random
 from Card import Card
+import wx
+from wx.lib.pubsub import pub
 
 class Deck(object):
     rank = ["2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"]
@@ -8,6 +10,7 @@ class Deck(object):
 
     def __init__(self):
         self.initDeck()
+        #TODO : Show deck image 
     
     def initDeck(self):
         for rank in self.rank:

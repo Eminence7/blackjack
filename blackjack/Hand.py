@@ -1,4 +1,6 @@
 import random
+import wx
+from wx.lib.pubsub import pub
 from Card import Card
 
 class Hand :

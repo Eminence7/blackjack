@@ -1,4 +1,6 @@
 
+import wx
+from wx.lib.pubsub import pub
 
 class Card(object):
 

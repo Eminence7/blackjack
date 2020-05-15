@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 import wx
+from wx.lib.pubsub import pub
 
 
 class Start_Home(wx.Frame):
@@ -39,8 +39,13 @@ class Start_Home(wx.Frame):
             rect = self.GetUpdateRegion().GetBox()
             dc.SetClippingRect(rect)
         dc.Clear()
-        bmp = wx.Bitmap("stock-photo-black-jack-gambling-table.jpg")
-        dc.DrawBitmap(bmp, 0, 0)
+        bmp = wx.Bitmap("images/stock-photo-black-jack-gambling-table.jpg")
+        dc.DrawBitmap(bmp, 1, 22)
+        
+        dc.SetClippingRect(12,12,12,12)
+        card = wx.Bitmap("images/2C.jpg")
+        dc.DrawBitmap(card,0,0)
+
 
         
 
