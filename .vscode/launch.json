@@ -8,7 +8,7 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "test.py",
+            "program": "C:/Users/Jordan DuCille/Documents/sem2y2/programming2/FakePaint/fake py evnt.py",
             "console": "integratedTerminal"
         }
     ]

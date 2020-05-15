@@ -10,32 +10,17 @@ class Start_Home(wx.Frame):
     def __init__(self, *args, **kw):
         super(Start_Home, self).__init__(*args, **kw)
 
-        self.SetSize((350, 250))
+        self.SetSize((500, 400))
         self.SetTitle('Twenny one!! Black Jack Card Game.')
         self.Centre()
 
 
-        self.InitUI()
-
-    def InitUI(self):
-
-        pnl = wx.Panel(self)
-        bmp = wx.Bitmap("homescreen.jpg")
-        pnl.Add(bmp, flag = wx.EXPAND,)
-           
-        Game_strt_btn = wx.Button(pnl, label='Game Start', pos=(120, 100))
-        Game_strt_btn.Bind(wx.EVT_BUTTON, self.GameWindow(self))
-
-        Game_Quit_btn = wx.Button(pnl, label='Quit', pos=(120, 130))
-        Game_strt_btn.Bind(wx.EVT_BUTTON, self.GameWindow(self))
-
-        Game_rules_btn = wx.Button(pnl, label='Game Help', pos=(120, 160))
-        Game_strt_btn.Bind(wx.EVT_BUTTON, self.GameWindow(self))
+      
+        self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
+        
+       
 
         
-
-          
-
     def GameWindow(self, e):
 
         if Game_Quit_btn:
@@ -45,9 +30,19 @@ class Start_Home(wx.Frame):
         else:
             Game_rules()
 
+    def OnEraseBackground(self, evt):
+        """    Add a picture to the background    """
+        # yanked from ColourDB.py
+        dc = evt.GetDC()
+        if not dc:
+            dc = wx.ClientDC(self)
+            rect = self.GetUpdateRegion().GetBox()
+            dc.SetClippingRect(rect)
+        dc.Clear()
+        bmp = wx.Bitmap("stock-photo-black-jack-gambling-table.jpg")
+        dc.DrawBitmap(bmp, 0, 0)
 
-             
-
+        
 
 class Black_jack(Start_Home):
     pass
