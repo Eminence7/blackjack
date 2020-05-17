@@ -24,6 +24,10 @@ class UI_Engine(wx.Frame):
         self.stayButton = wx.Button(self.ButtonPanel, id=-1, label = "Stay", pos = (47,48), size = (100,26))
         self.resetButton = wx.Button(self.ButtonPanel, id=-1, label = "Reset", pos = (47,78), size = (100,26))
 
+        self.hitButton.Bind(wx.EVT_BUTTON, self.hitPlayer)
+        self.stayButton.Bind(wx.EVT_BUTTON, self.stayPlayer)
+        self.resetButton.Bind(wx.EVT_BUTTON, self.resetGame)
+
         self.box = wx.StaticBoxSizer(wx.VERTICAL, self.ButtonPanel, "Box")
         self.box.Add(self.ButtonPanel)
         self.SetSizer(self.box)
@@ -33,6 +37,16 @@ class UI_Engine(wx.Frame):
         pub.subscribe(self.GameOver,"GameOver")
         pub.subscribe(self.DrawCard,"DrawCard")
         pub.subscribe(self.DisplayHand, "DisplayHand")
+    
+    def hitPlayer(self, event):
+        pub.sendMessage("HitPlayer")
+    
+    def stayPlayer(self, event):
+        pub.sendMessage("StayPlayer")
+
+
+    def resetGame(self, event):
+        pub.sendMessage("StartOver")
 
     def DisplayHand(self, cards, isDealer):
         images = []

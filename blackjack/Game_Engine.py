@@ -8,9 +8,11 @@ from wx.lib.pubsub import pub
 class Game_Engine:
     player_hand = Hand()
     dealer_hand = Hand(isDealer=True)
-    
+
     def __init__(self):
         pub.subscribe(self.startGame,"StartOver")
+        pub.subscribe(self.HitPlayer,"HitPlayer")
+        pub.subscribe(self.StayPlayer,"StayPlayer")
 
     def play(self):
         playing = True
@@ -86,36 +88,36 @@ class Game_Engine:
         self.player_hand.display()        
 
     def HitPlayer(self):
-        self.player_hand.add_card(self.deck.deal())
+        self.player_hand.addCard(self.deck.draw())
         self.player_hand.display()
-        if isBlackJack():
+        if self.isBlackJack():
             return
         if self.player_is_over():
             print("You have lost!")
             game_over = True
-            pub.sendMessage("GameOver","Dealer")     
+            pub.sendMessage("GameOver",WhoWin="Dealer")     
     
     def StayPlayer(self):
         player_hand_value = self.player_hand.getValue()
         dealer_hand_value = self.dealer_hand.getValue()
 
         if player_hand_value > dealer_hand_value:
-            pub.sendMessage("GameOver","Player")     
+            pub.sendMessage("GameOver",WhoWin="Player")     
         elif player_hand_value == dealer_hand_value:
-            pub.sendMessage("GameOver","Tie")     
+            pub.sendMessage("GameOver",WhoWin="Tie")     
         else:
-            pub.sendMessage("GameOver","Dealer")
+            pub.sendMessage("GameOver",WhoWin="Dealer")
 
     def isBlackJack(self):
-        player, dealer = check_for_blackjack()
+        player, dealer = self.check_for_blackjack()
         if not player and not dealer:
             return False
         if player and dealer:
-            pub.sendMessage("GameOver","Tie")     
+            pub.sendMessage("GameOver",WhoWin="Tie")     
         elif player:
-            pub.sendMessage("GameOver","Player")     
+            pub.sendMessage("GameOver",WhoWin="Player")     
         else:
-            pub.sendMessage("GameOver","Dealer")
+            pub.sendMessage("GameOver",WhoWin="Dealer")
         return True
         
 
