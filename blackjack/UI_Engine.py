@@ -7,7 +7,7 @@ class UI_Engine(wx.Frame):
     deckPosition = wx.Rect(20,20,20,20)
     dealerPosition = wx.Rect(20,20,20,20)
     playerPosition = wx.Rect(20,20,20,20)
-    dc = ""
+    
     def __init__(self, *args, **kw):
         super(UI_Engine, self).__init__(*args, **kw)
         fullscreenSize = wx.ScreenDC().GetSize();   
@@ -18,6 +18,16 @@ class UI_Engine(wx.Frame):
         self.SetTitle('Twenny one!! Black Jack Card Game.')
         self.Centre()
 
+        self.ButtonPanel = wx.Panel(self,style=wx.SIMPLE_BORDER,size=(400,400),pos = (1000,20))
+
+
+        self.hitButton = wx.Button(self.ButtonPanel, id=-1, label = "Hit", pos = (47,20), size = (100,26))
+        self.stayButton = wx.Button(self.ButtonPanel, id=-1, label = "Stay", pos = (47,48), size = (100,26))
+        self.resetButton = wx.Button(self.ButtonPanel, id=-1, label = "Reset", pos = (47,78), size = (100,26))
+
+        self.box = wx.StaticBoxSizer(wx.VERTICAL, self.ButtonPanel, "Box")
+        self.box.Add(self.ButtonPanel)
+        self.SetSizer(self.box)
 
       
         self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
