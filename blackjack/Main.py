@@ -13,9 +13,11 @@ from Game_Engine import Game_Engine
 
 def main():
     gameEngine = Game_Engine()
+    
     app = wx.App()
     ex = UI_Engine(None)
     ex.Show()
+    gameEngine.startGame()
     app.MainLoop()
 
 

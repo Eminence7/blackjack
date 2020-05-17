@@ -1,9 +1,10 @@
 
 import wx
+import copy
 from wx.lib.pubsub import pub
 
 class UI_Engine(wx.Frame):
-    
+    cardBackImage = "images/gray_back.jpg";
     deckPosition = wx.Rect(20,20,20,20)
     dealerPosition = wx.Rect(20,20,20,20)
     playerPosition = wx.Rect(20,20,20,20)
@@ -31,7 +32,41 @@ class UI_Engine(wx.Frame):
 
       
         self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
-        
+        pub.subscribe(self.GameOver,"GameOver")
+        pub.subscribe(self.DrawCard,"DrawCard")
+
+    def DrawCard(self, isDealer, cardCount):
+        images = []
+        for index in range(cardCount):
+            images.append(self.cardBackImage)
+
+        if isDealer: 
+            self.DrawStagardImages(self.dealerPosition, images)
+        else:
+            self.DrawStagardImages(self.playerPosition, images)
+    
+    def DrawStagardImages(self, rect, imageNames, speratory= 30, separtorx = 15):
+        for index in range(imageNames.__len__()):
+            imageRect = copy.copy(rect)
+            imageRect.y += speratory * index
+            imageRect.x += separtorx * index
+            self.DrawAtPosition(imageNames[index],imageRect)
+
+    def GameOver(self, WhoWin):
+        messageBox = wx.MessageDialog(self, "", caption="Game Over",
+              style=wx.OK|wx.CENTRE)
+        message = ""
+        if WhoWin == "Dealer":
+            message = "The Dealer wins"
+        elif WhoWin == "Player":
+            message = "You have won"
+        else:
+            message = "The game is tied"
+
+        messageBox.SetMessage(message)
+        messageBox.ShowModal()
+        pub.sendMessage("StartOver")
+
     def SetScreenAndCardPosition(self, screenSize):
         screenSize.DecBy(100,100)
         self.SetSize(screenSize)
@@ -66,18 +101,23 @@ class UI_Engine(wx.Frame):
     def OnEraseBackground(self, evt):
         """    Add a picture to the background    """
         # yanked from ColourDB.py
-        self.dc = evt.GetDC()
+        self.initDC()
+        bmp = wx.Bitmap("images\stock-photo-black-jack-gambling-table.jpg")
+        self.dc.DrawBitmap(bmp, 0, 0)
+
+        deckimages = []
+        for index in range(5):
+            deckimages.append(self.cardBackImage)
+
+        self.DrawStagardImages(self.deckPosition,deckimages,5,2)
+
+    def initDC(self):
+        self.dc = wx.WindowDC(self)
         if not self.dc:
             self.dc = wx.Clientself.dc(self)
             rect = self.GetUpdateRegion().GetBox()
             self.dc.SetClippingRect(rect)
         self.dc.Clear()
-        bmp = wx.Bitmap("images\stock-photo-black-jack-gambling-table.jpg")
-        self.dc.DrawBitmap(bmp, 0, 0)
-
-        self.DrawAtPosition("images/gray_back.jpg",self.deckPosition)
-        self.DrawAtPosition("images/gray_back.jpg",self.dealerPosition)
-        self.DrawAtPosition("images/gray_back.jpg",self.playerPosition)  
 
     def DrawAtPosition(self,imageName,rect):
         image = wx.BitmapFromImage(wx.ImageFromBitmap(wx.Bitmap(imageName)).Scale(rect.Size.width,rect.Size.height ))

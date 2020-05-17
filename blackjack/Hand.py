@@ -4,28 +4,25 @@ from wx.lib.pubsub import pub
 from Card import Card
 
 class Hand :
-    cards =[]
-    value = 0 
-    isDealer = False
 
-    def __init__(self, isDealer):
+    def __init__(self, isDealer=False):
+        self.cards =[]
+        self.value = 0 
+        self.isDealer = False
+
         #TODO: Calculate "Where" this and should be, (dealer section or player section)
         self.isDealer = isDealer
-        pass
 
-    def AddCard(self, card):
+    def addCard(self, card):
         self.cards.append(card)
-        #TODO: Add gui to show Card
+        pub.sendMessage("DrawCard",isDealer=self.isDealer, cardCount=self.cards.__len__())
+        #TODO: Add gui to show Card Back
 
-    def show_Card(self, position):
+    def showCard(self, position):
         if len(self.cards) <= position:
             self.cards[position - 1 ].display()
 
-    def Show_Hand (self):
-        for card in self.cards:
-            card.display()
-
-    def calculate_value(self):
+    def calculateValue(self):
         self.value = 0
         has_ace = False
         for card in self.cards:
@@ -41,13 +38,13 @@ class Hand :
         if has_ace and self.value > 21:
             self.value -= 10 
     
-    def get_value(self):
-        self.calculate_value()
+    def getValue(self):
+        self.calculateValue()
         return self.value
     
     def display(self):
-        for card in self.cards: 
-            card.display();
+        pub.sendMessage("DisplayHand",cards = self.cards, isDealer = self.isDealer)
+        
 
     # def Top_card ():``
 
