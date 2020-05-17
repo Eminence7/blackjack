@@ -15,12 +15,10 @@ class UI_Engine(wx.Frame):
         
         self.SetScreenAndCardPosition(fullscreenSize)
        
-
         self.SetTitle('Twenny one!! Black Jack Card Game.')
         self.Centre()
 
         self.ButtonPanel = wx.Panel(self,style=wx.SIMPLE_BORDER,size=(400,400),pos = (1000,20))
-
 
         self.hitButton = wx.Button(self.ButtonPanel, id=-1, label = "Hit", pos = (47,20), size = (100,26))
         self.stayButton = wx.Button(self.ButtonPanel, id=-1, label = "Stay", pos = (47,48), size = (100,26))
@@ -34,6 +32,17 @@ class UI_Engine(wx.Frame):
         self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
         pub.subscribe(self.GameOver,"GameOver")
         pub.subscribe(self.DrawCard,"DrawCard")
+        pub.subscribe(self.DisplayHand, "DisplayHand")
+
+    def DisplayHand(self, cards, isDealer):
+        images = []
+        for card in cards:
+            images.append(card.image)
+        
+        if isDealer: 
+            self.DrawStagardImages(self.dealerPosition, images)
+        else:
+            self.DrawStagardImages(self.playerPosition, images)
 
     def DrawCard(self, isDealer, cardCount):
         images = []
