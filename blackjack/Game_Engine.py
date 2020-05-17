@@ -95,6 +95,7 @@ class Game_Engine:
         if self.player_is_over():
             print("You have lost!")
             game_over = True
+            self.dealer_hand.display()
             pub.sendMessage("GameOver",WhoWin="Dealer")     
     
     def StayPlayer(self):
@@ -102,10 +103,13 @@ class Game_Engine:
         dealer_hand_value = self.dealer_hand.getValue()
 
         if player_hand_value > dealer_hand_value:
+            self.dealer_hand.display()
             pub.sendMessage("GameOver",WhoWin="Player")     
         elif player_hand_value == dealer_hand_value:
+            self.dealer_hand.display()
             pub.sendMessage("GameOver",WhoWin="Tie")     
         else:
+            self.dealer_hand.display()
             pub.sendMessage("GameOver",WhoWin="Dealer")
 
     def isBlackJack(self):
@@ -113,10 +117,13 @@ class Game_Engine:
         if not player and not dealer:
             return False
         if player and dealer:
+            self.dealer_hand.display()
             pub.sendMessage("GameOver",WhoWin="Tie")     
         elif player:
+            self.dealer_hand.display()
             pub.sendMessage("GameOver",WhoWin="Player")     
         else:
+            self.dealer_hand.display()
             pub.sendMessage("GameOver",WhoWin="Dealer")
         return True
         
