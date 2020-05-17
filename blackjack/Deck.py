@@ -27,7 +27,7 @@ class Deck(object):
                 if i == randi:
                     continue
                 self.cards[i], self.cards[randi] = self.cards[randi], self.cards[i]
-                print("Shuffling card "+ self.cards[i].print() + " to position "+str(i)+ " in deck")
+                print("Shuffling card "+ self.cards[i].display() + " to position "+str(i)+ " in deck")
 
     def draw(self):
         if len(self.cards) > 1:

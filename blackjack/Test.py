@@ -8,16 +8,17 @@ def main():
     deck.shuffle()
     print("Shuffling again")
     deck.shuffle()
-    deck.printCards()
+    for card in deck.cards:
+        print (card.image)
     print ("Card Total:"+ str(deck.cards.__len__()))
 
     # test drawing 
     card  = deck.draw();
-    print ("Draw card "+ card.print() )
+    print ("Draw card "+ card.image )
     card  = deck.draw();
-    print ("Draw card "+ card.print() )
+    print ("Draw card "+ card.image )
     card  = deck.draw();
-    print ("Draw card "+ card.print() )
+    print ("Draw card "+ card.image )
 
 
 
