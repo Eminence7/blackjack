@@ -7,7 +7,7 @@ class UI_Engine(wx.Frame):
     deckPosition = wx.Rect(20,20,20,20)
     dealerPosition = wx.Rect(20,20,20,20)
     playerPosition = wx.Rect(20,20,20,20)
-
+    dc = ""
     def __init__(self, *args, **kw):
         super(UI_Engine, self).__init__(*args, **kw)
         fullscreenSize = wx.ScreenDC().GetSize();   
@@ -56,20 +56,20 @@ class UI_Engine(wx.Frame):
     def OnEraseBackground(self, evt):
         """    Add a picture to the background    """
         # yanked from ColourDB.py
-        dc = evt.GetDC()
-        if not dc:
-            dc = wx.ClientDC(self)
+        self.dc = evt.GetDC()
+        if not self.dc:
+            self.dc = wx.Clientself.dc(self)
             rect = self.GetUpdateRegion().GetBox()
-            dc.SetClippingRect(rect)
-        dc.Clear()
+            self.dc.SetClippingRect(rect)
+        self.dc.Clear()
         bmp = wx.Bitmap("images\stock-photo-black-jack-gambling-table.jpg")
-        dc.DrawBitmap(bmp, 0, 0)
+        self.dc.DrawBitmap(bmp, 0, 0)
 
-        self.DrawAtPosition(dc,"images/gray_back.jpg",self.deckPosition)
-        self.DrawAtPosition(dc,"images/gray_back.jpg",self.dealerPosition)
-        self.DrawAtPosition(dc,"images/gray_back.jpg",self.playerPosition)  
+        self.DrawAtPosition("images/gray_back.jpg",self.deckPosition)
+        self.DrawAtPosition("images/gray_back.jpg",self.dealerPosition)
+        self.DrawAtPosition("images/gray_back.jpg",self.playerPosition)  
 
-    def DrawAtPosition(self,dc,imageName,rect):
+    def DrawAtPosition(self,imageName,rect):
         image = wx.BitmapFromImage(wx.ImageFromBitmap(wx.Bitmap(imageName)).Scale(rect.Size.width,rect.Size.height ))
         #card.Scale(wx.Size(200,100))
-        dc.DrawBitmap(image,rect.Position)
+        self.dc.DrawBitmap(image,rect.Position)
